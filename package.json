@@ -16,7 +16,9 @@
     "prismjs": "^1.29.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-markdown": "^8.0.7",
     "react-router-dom": "^6.11.2",
+    "remark-slate": "^1.8.6",
     "slate": "^0.94.1",
     "slate-react": "^0.94.2"
   },

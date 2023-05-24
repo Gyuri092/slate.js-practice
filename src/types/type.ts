@@ -11,3 +11,5 @@ declare module "slate" {
     Text: CustomText;
   }
 }
+
+export type setStateFunctionType = (value: string) => void;
