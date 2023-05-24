@@ -24,7 +24,6 @@ export const TextfileLoader = () => {
         <RemoveText editor={editor} />
         <Editable></Editable>
       </Slate>
-      1
     </div>
   );
 };
