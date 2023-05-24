@@ -3,6 +3,12 @@ import { TextfileLoader } from "./components/TextfileLoader";
 import { MarkdownLoader } from "./components/MarkdownLoader";
 
 const Router = () => {
+  const initialValue: Descendant[] = [
+    {
+      type: "paragraph",
+      children: [{ text: "markdown 텍스트를 수정해보세요." }],
+    },
+  ];
   return (
     <BrowserRouter>
       <Routes>
