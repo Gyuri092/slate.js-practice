@@ -1,15 +1,12 @@
 import { useCallback, useState } from "react";
 import { Descendant, createEditor } from "slate";
-import { Editable, RenderLeafProps, Slate, withReact } from "slate-react";
-import { ImportFile } from "../common/ImportFile";
-import { RemoveText } from "../common/RemoveText";
+import { Slate, withReact } from "slate-react";
 import { containerStyle } from "../../styles/style";
 import ReactMarkdown from "react-markdown";
 import { setStateFunctionType } from "../../types/type";
-import { MarkdownLeaf } from "./MarkdownLeaf";
 import { serialize } from "remark-slate";
-import { Element } from "../common/Element";
 import { Header } from "../common/Header";
+import { SlateBlock } from "../common/SlateBlock";
 
 export const MarkdownLoader = () => {
   const [editor] = useState(() => withReact(createEditor()));
@@ -27,11 +24,6 @@ export const MarkdownLoader = () => {
     setMarkdownText(value);
   };
 
-  const renderLeaf = useCallback(
-    (props: RenderLeafProps) => <MarkdownLeaf {...props} />,
-    []
-  );
-
   const handleChange = useCallback(
     (nextValue: Descendant[]) => {
       setValue(nextValue);
@@ -44,16 +36,11 @@ export const MarkdownLoader = () => {
     <div css={containerStyle}>
       <Header />
       <Slate editor={editor} value={initialValue} onChange={handleChange}>
-        <ImportFile
-          accept={fileExtension}
+        <SlateBlock
+          fileExtension={fileExtension}
           setStateFunction={setStateFunction}
+          editor={editor}
         />
-        <RemoveText editor={editor} setStateFunction={setStateFunction} />
-        <Editable
-          renderLeaf={renderLeaf}
-          renderElement={(props) => <Element {...props} />}
-        />
-        <hr />
         <ReactMarkdown children={markdownText} />
       </Slate>
     </div>
