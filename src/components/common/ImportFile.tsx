@@ -1,6 +1,6 @@
 import { useSlateStatic } from "slate-react";
-import { handleChange } from "../utils/handleChange";
-import { setStateFunctionType } from "../types/type";
+import { handleChange } from "../../utils/handleChange";
+import { setStateFunctionType } from "../../types/type";
 
 export const ImportFile = (props: {
   accept: string;

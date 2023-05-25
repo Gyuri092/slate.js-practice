@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Descendant, createEditor } from "slate";
 import { withReact, Slate, Editable } from "slate-react";
-import { ImportFile } from "./ImportFile";
-import { RemoveText } from "./RemoveText";
-import { containerStyle } from "../styles/style";
-import { setStateFunctionType } from "../types/type";
+import { ImportFile } from "../common/ImportFile";
+import { RemoveText } from "../common/RemoveText";
+import { containerStyle } from "../../styles/style";
+import { setStateFunctionType } from "../../types/type";
 
 export const TextfileLoader = () => {
   const [editor] = useState(() => withReact(createEditor()));
