@@ -13,6 +13,7 @@
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
     "@types/prismjs": "^1.26.0",
+    "@types/styled-components": "^5.1.26",
     "epubjs": "^0.3.93",
     "prismjs": "^1.29.0",
     "react": "^18.2.0",
@@ -21,7 +22,9 @@
     "react-router-dom": "^6.11.2",
     "remark-slate": "^1.8.6",
     "slate": "^0.94.1",
-    "slate-react": "^0.94.2"
+    "slate-react": "^0.94.2",
+    "styled-components": "^6.0.0-rc.2",
+    "styled-reset": "^4.4.7"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",

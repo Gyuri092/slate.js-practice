@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { Descendant, createEditor } from "slate";
 import { withReact, Slate, Editable } from "slate-react";
 import { ImportFile } from "../common/ImportFile";
 import { RemoveText } from "../common/RemoveText";
 import { containerStyle } from "../../styles/style";
 import { setStateFunctionType } from "../../types/type";
+import { Header } from "../common/Header";
 
 export const TextfileLoader = () => {
   const [editor] = useState(() => withReact(createEditor()));
@@ -21,13 +21,13 @@ export const TextfileLoader = () => {
   };
   return (
     <div css={containerStyle}>
-      <Link to={"/markdown"}>markdown 편집기로 이동하기</Link>
+      <Header />
       <Slate editor={editor} value={initialValue}>
         <ImportFile
           accept={fileExtension}
           setStateFunction={setStateFunction}
         />
-        <RemoveText editor={editor} />
+        <RemoveText editor={editor} setStateFunction={setStateFunction} />
         <Editable></Editable>
       </Slate>
     </div>

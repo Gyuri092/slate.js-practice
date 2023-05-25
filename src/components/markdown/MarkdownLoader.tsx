@@ -1,5 +1,4 @@
 import { useCallback, useState } from "react";
-import { Link } from "react-router-dom";
 import { Descendant, createEditor } from "slate";
 import { Editable, RenderLeafProps, Slate, withReact } from "slate-react";
 import { ImportFile } from "../common/ImportFile";
@@ -10,6 +9,7 @@ import { setStateFunctionType } from "../../types/type";
 import { MarkdownLeaf } from "./MarkdownLeaf";
 import { serialize } from "remark-slate";
 import { Element } from "../common/Element";
+import { Header } from "../common/Header";
 
 export const MarkdownLoader = () => {
   const [editor] = useState(() => withReact(createEditor()));
@@ -42,7 +42,7 @@ export const MarkdownLoader = () => {
 
   return (
     <div css={containerStyle}>
-      <Link to={"/"}>txt 편집기로 이동하기</Link>
+      <Header />
       <Slate editor={editor} value={initialValue} onChange={handleChange}>
         <ImportFile
           accept={fileExtension}
