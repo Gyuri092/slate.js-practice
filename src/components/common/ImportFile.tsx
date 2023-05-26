@@ -29,28 +29,36 @@ export const ImportFile = (props: {
 
     setBookContents(ePubs.renderTo("area"));
     setBook(ePubs);
-    // book.renderTo("area").display();
   };
+
   useEffect(() => {
     if (bookContents && book) {
-      bookContents.display().then(() => {
-        /*
-        section 속성
-        content : html을 string으로 변환한 상태
-          document : dom 
-          element : html 객체
-        */
-        const spine = book.spine;
-        spine.each((elem: SpineItem) => {
-          // console.log("spinItem Index : ", elem.index);
-          // console.log("get Item on Index : ", spine.get(elem.index));
-          const section = spine.get(elem.index);
-          const contents = section.output;
-          console.log(contents);
-        });
-      });
+      bookContents.display();
     }
   }, [book, bookContents]);
+  const htmlArray: string[] = [];
+  const handleNextButton = () => {
+    bookContents && bookContents.next();
+    if (book) {
+      const spine = book.spine;
+      spine.each(async (elem: SpineItem) => {
+        const section = await spine.get(elem.index);
+        const contents = await section.output;
+        htmlArray.push(contents);
+      });
+      parsingText();
+    }
+  };
+
+  const parsingText = () => {
+    const setArray = new Set(htmlArray);
+    const filteredArray = [...setArray].filter((elem) => elem);
+    const parsedArray = filteredArray.map((elem) =>
+      elem.replace(/<[^>]+>/g, "")
+    );
+    console.log(parsedArray);
+  };
+
   return (
     <>
       <input
@@ -68,9 +76,7 @@ export const ImportFile = (props: {
             <StyledButton onClick={() => bookContents && bookContents.prev()}>
               이전 페이지
             </StyledButton>
-            <StyledButton onClick={() => bookContents && bookContents.next()}>
-              다음 페이지
-            </StyledButton>
+            <StyledButton onClick={handleNextButton}>다음 페이지</StyledButton>
           </StyledButtonContainer>
           <StyledEpubArea id="area" />
         </>
