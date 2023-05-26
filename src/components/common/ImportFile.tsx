@@ -1,5 +1,5 @@
 import { useSlateStatic } from "slate-react";
-import { handleChange } from "../../utils/handleChange";
+import { handleChange, insertFile } from "../../utils/handleChange";
 import { setStateFunctionType } from "../../types/type";
 import styled from "styled-components";
 import ePub, { Book, Rendition } from "epubjs";
@@ -13,6 +13,7 @@ export const ImportFile = (props: {
   const editor = useSlateStatic();
   const [bookContents, setBookContents] = useState<Rendition | null>(null);
   const [book, setBook] = useState<Book | null>(null);
+  const [importText, setImportText] = useState("");
 
   const handleEpub = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
@@ -37,7 +38,7 @@ export const ImportFile = (props: {
     }
   }, [book, bookContents]);
   const htmlArray: string[] = [];
-  const handleNextButton = () => {
+  const handleNextButton = (setStateFunction: setStateFunctionType) => {
     bookContents && bookContents.next();
     if (book) {
       const spine = book.spine;
@@ -46,17 +47,19 @@ export const ImportFile = (props: {
         const contents = await section.output;
         htmlArray.push(contents);
       });
-      parsingText();
+      parsingPlainText(setStateFunction);
     }
   };
 
-  const parsingText = () => {
+  const parsingPlainText = (setStateFunction: setStateFunctionType) => {
     const setArray = new Set(htmlArray);
     const filteredArray = [...setArray].filter((elem) => elem);
     const parsedArray = filteredArray.map((elem) =>
       elem.replace(/<[^>]+>/g, "")
     );
-    console.log(parsedArray);
+    setImportText(parsedArray.join("\n"));
+    console.log(importText);
+    insertFile(editor, importText, setStateFunction);
   };
 
   return (
@@ -76,7 +79,11 @@ export const ImportFile = (props: {
             <StyledButton onClick={() => bookContents && bookContents.prev()}>
               이전 페이지
             </StyledButton>
-            <StyledButton onClick={handleNextButton}>다음 페이지</StyledButton>
+            <StyledButton
+              onClick={() => handleNextButton(props.setStateFunction)}
+            >
+              다음 페이지
+            </StyledButton>
           </StyledButtonContainer>
           <StyledEpubArea id="area" />
         </>

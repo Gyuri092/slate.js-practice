@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { Descendant, createEditor } from "slate";
-import { Slate, withReact } from "slate-react";
+import { Editable, Slate, withReact } from "slate-react";
 import { containerStyle } from "../../styles/style";
 import { setStateFunctionType } from "../../types/type";
 import { Header } from "../common/Header";
@@ -38,7 +38,6 @@ export const EpubLoader = () => {
           setStateFunction={setStateFunction}
           editor={editor}
         />
-        <div id="area"></div>
       </Slate>
     </div>
   );

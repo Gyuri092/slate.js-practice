@@ -2,7 +2,7 @@ import { BaseEditor, Transforms } from "slate";
 import { ReactEditor } from "slate-react";
 import { setStateFunctionType } from "../types/type";
 
-const insertFile = (
+export const insertFile = (
   editor: BaseEditor & ReactEditor,
   importText: string,
   setStateFunction: setStateFunctionType
