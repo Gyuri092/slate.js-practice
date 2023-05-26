@@ -2,8 +2,9 @@ import { useSlateStatic } from "slate-react";
 import { handleChange } from "../../utils/handleChange";
 import { setStateFunctionType } from "../../types/type";
 import styled from "styled-components";
-import ePub, { Rendition } from "epubjs";
+import ePub, { Book, Rendition } from "epubjs";
 import { useEffect, useState } from "react";
+import { SpineItem } from "epubjs/types/section";
 
 export const ImportFile = (props: {
   accept: string;
@@ -11,6 +12,7 @@ export const ImportFile = (props: {
 }) => {
   const editor = useSlateStatic();
   const [bookContents, setBookContents] = useState<Rendition | null>(null);
+  const [book, setBook] = useState<Book | null>(null);
 
   const handleEpub = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
@@ -21,20 +23,34 @@ export const ImportFile = (props: {
     if (!file) {
       return;
     }
-    const book = await file
+    const ePubs = await file
       .arrayBuffer()
       .then((buffer: ArrayBuffer) => ePub(buffer));
 
-    setBookContents(book.renderTo("area"));
-    book.renderTo("area").display();
+    setBookContents(ePubs.renderTo("area"));
+    setBook(ePubs);
+    // book.renderTo("area").display();
   };
   useEffect(() => {
-    if (bookContents) {
-      bookContents.display().then((contents) => console.log(contents));
-      // 여기서부터 생각해보기. 렌더링된 페이지의 text만을 추출하는 메소드가있는지 확인해보고 없으면 html객체라도 받을수있게 해보기.
+    if (bookContents && book) {
+      bookContents.display().then(() => {
+        /*
+        section 속성
+        content : html을 string으로 변환한 상태
+          document : dom 
+          element : html 객체
+        */
+        const spine = book.spine;
+        spine.each((elem: SpineItem) => {
+          // console.log("spinItem Index : ", elem.index);
+          // console.log("get Item on Index : ", spine.get(elem.index));
+          const section = spine.get(elem.index);
+          const contents = section.output;
+          console.log(contents);
+        });
+      });
     }
-  }, [bookContents]);
-
+  }, [book, bookContents]);
   return (
     <>
       <input
