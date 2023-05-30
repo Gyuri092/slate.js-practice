@@ -1,13 +1,14 @@
 import { useCallback, useState } from "react";
 import { Descendant, createEditor } from "slate";
-import { Slate, withReact } from "slate-react";
+import { Editable, RenderLeafProps, Slate, withReact } from "slate-react";
 import { containerStyle } from "../../styles/style";
 import ReactMarkdown from "react-markdown";
 import { setStateFunctionType } from "../../types/type";
 import { serialize } from "remark-slate";
 import { Header } from "../common/Header";
 import { SlateBlock } from "../common/SlateBlock";
-
+import { MarkdownLeaf } from "../markdown/MarkdownLeaf";
+import { Element } from "../common/Element";
 export const MarkdownLoader = () => {
   const [editor] = useState(() => withReact(createEditor()));
   const fileExtension = ".md";
@@ -23,7 +24,10 @@ export const MarkdownLoader = () => {
   const setStateFunction: setStateFunctionType = (value) => {
     setMarkdownText(value);
   };
-
+  const renderLeaf = useCallback(
+    (props: RenderLeafProps) => <MarkdownLeaf {...props} />,
+    []
+  );
   const handleChange = useCallback(
     (nextValue: Descendant[]) => {
       setValue(nextValue);
@@ -40,6 +44,10 @@ export const MarkdownLoader = () => {
           fileExtension={fileExtension}
           setStateFunction={setStateFunction}
           editor={editor}
+        />
+        <Editable
+          renderLeaf={renderLeaf}
+          renderElement={(props) => <Element {...props} />}
         />
         <ReactMarkdown children={markdownText} />
       </Slate>

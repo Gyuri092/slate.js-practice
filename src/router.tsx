@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { MarkdownLoader } from "./components/markdown/MarkdownLoader";
 import { TextfileLoader } from "./components/textfile/TextfileLoader";
-import { EpubLoader } from "./components/epub/epubLoader";
+import { EpubLoader } from "./components/epub/EpubLoader";
 
 const Router = () => {
   return (

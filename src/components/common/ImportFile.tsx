@@ -33,33 +33,33 @@ export const ImportFile = (props: {
   };
 
   useEffect(() => {
-    if (bookContents && book) {
+    if (book && bookContents) {
       bookContents.display();
     }
   }, [book, bookContents]);
+
   const htmlArray: string[] = [];
-  const handleNextButton = (setStateFunction: setStateFunctionType) => {
-    bookContents && bookContents.next();
-    if (book) {
+  const handleNextButton = async (setStateFunction: setStateFunctionType) => {
+    if (book && bookContents) {
+      bookContents.next();
       const spine = book.spine;
-      spine.each(async (elem: SpineItem) => {
-        const section = await spine.get(elem.index);
-        const contents = await section.output;
+      await spine.each((elem: SpineItem) => {
+        const section = spine.get(elem.index);
+        const contents = section.output;
         htmlArray.push(contents);
       });
-      parsingPlainText(setStateFunction);
+      await parsingPlainText();
+      await insertFile(editor, importText, setStateFunction);
     }
   };
 
-  const parsingPlainText = (setStateFunction: setStateFunctionType) => {
+  const parsingPlainText = () => {
     const setArray = new Set(htmlArray);
-    const filteredArray = [...setArray].filter((elem) => elem);
+    const filteredArray = [...setArray].filter((elem) => elem !== undefined);
     const parsedArray = filteredArray.map((elem) =>
       elem.replace(/<[^>]+>/g, "")
     );
     setImportText(parsedArray.join("\n"));
-    console.log(importText);
-    insertFile(editor, importText, setStateFunction);
   };
 
   return (
