@@ -1,6 +1,4 @@
 import JSZip from "jszip";
-// Filter Example: https://gist.github.com/hmmhmmhm/f1383a32b904e85cc7b352ad49a8c8e9
-// import { applyFilters } from './filter'
 
 export interface ICollectedFile {
   fileName: string;
@@ -51,18 +49,9 @@ export const ignite = async (originEPUBBuffer: ArrayBufferLike) => {
   // 필요한 데이터를 수집합니다.
   const data = await collect(epubContainer);
 
-  // 필터들을 적용합니다.
-  // await applyFilters({
-  //   container: epubContainer,
-  //   data,
-  //   option: {
-  //     styleType: 'basic',
-  //   },
-  //   state,
-  // })
-  // return data;
+  return data;
   // EPUB 파일을 시리얼라이즈 합니다.
-  return await pack(epubContainer);
+  // return await pack(epubContainer);
 };
 
 /**

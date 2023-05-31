@@ -1,7 +1,7 @@
 import { useSlateStatic } from "slate-react";
 import { handleChange, insertFile } from "../../utils/handleChange";
 import { setStateFunctionType } from "../../types/type";
-import { ignite } from "../epub/EpubParser";
+import { ignite, parse } from "../epub/EpubParser";
 import JSZip from "jszip";
 
 export const ImportFile = (props: {
@@ -21,9 +21,27 @@ export const ImportFile = (props: {
     }
 
     const epubFile = await file.arrayBuffer();
-    const uint8ArrayData = await ignite(epubFile);
-    const utf8decoder = await new TextDecoder("utf-8").decode(uint8ArrayData);
-    await console.log("uint8ArrayData is docoded : ", utf8decoder);
+    const data = await ignite(epubFile);
+    const zip = await parse(epubFile);
+
+    const htmlContents = await Promise.all(
+      data.files
+        .filter((item) => item.fileExt === "xml" || item.fileExt === "html")
+        .map(async (item) => {
+          const htmlFile = zip.file(item.originName);
+          const htmlXml = await htmlFile?.async("string");
+          if (!htmlXml) {
+            return;
+          }
+          const htmlDoc = new DOMParser().parseFromString(
+            htmlXml,
+            "application/xml"
+          );
+          return htmlDoc.documentElement.textContent;
+        })
+    );
+    const importText = htmlContents.toString();
+    insertFile(editor, importText, props.setStateFunction);
   };
 
   return (
