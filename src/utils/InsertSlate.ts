@@ -18,7 +18,7 @@ export const insertFile = (
   );
 };
 
-export const handleChange = (
+export const processImportedFile = (
   event: React.ChangeEvent<HTMLInputElement>,
   editor: BaseEditor & ReactEditor,
   setStateFunction: setStateFunctionType

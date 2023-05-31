@@ -6,7 +6,7 @@ export const RemoveText = (props: {
   editor: BaseEditor & ReactEditor;
   setStateFunction: setStateFunctionType;
 }) => {
-  const handleRemove = () => {
+  const removeText = () => {
     const lengthArray = Array.from(
       Array(props.editor.children.length),
       (value, index) => index
@@ -21,5 +21,5 @@ export const RemoveText = (props: {
     props.setStateFunction("");
   };
 
-  return <button onClick={handleRemove}>텍스트 비우기</button>;
+  return <button onClick={removeText}>텍스트 비우기</button>;
 };

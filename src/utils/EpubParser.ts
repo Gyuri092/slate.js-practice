@@ -1,17 +1,5 @@
 import JSZip from "jszip";
-
-export interface ICollectedFile {
-  fileName: string;
-  fileExt: string;
-  filePaths: string[];
-  originName: string;
-  file: JSZip.JSZipObject;
-}
-
-export interface ICollectedData {
-  containerXML: string;
-  files: ICollectedFile[];
-}
+import { ICollectedData, ICollectedFile } from "../types/type";
 
 /**
  * EPUB 파일을 읽어옵니다.
@@ -20,17 +8,6 @@ export const parse = async <T extends ArrayBufferLike>(rawEPUB: T) => {
   const zip = new JSZip();
   await zip.loadAsync(rawEPUB);
   return zip;
-};
-
-/**
- * EPUB 파일 버퍼를 생성한 후 내보냅니다.
- */
-export const pack = <T extends JSZip>(container: T) => {
-  return container.generateAsync({
-    compression: "DEFLATE",
-    mimeType: "application/epub+zip",
-    type: "uint8array",
-  });
 };
 
 export const getContainerXML = async <T extends JSZip>(epubContainer: T) => {
@@ -50,8 +27,6 @@ export const ignite = async (originEPUBBuffer: ArrayBufferLike) => {
   const data = await collect(epubContainer);
 
   return data;
-  // EPUB 파일을 시리얼라이즈 합니다.
-  // return await pack(epubContainer);
 };
 
 /**

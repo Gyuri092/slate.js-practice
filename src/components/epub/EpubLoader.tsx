@@ -17,18 +17,10 @@ export const EpubLoader = () => {
       children: [{ text: "epub 텍스트를 수정해보세요." }],
     },
   ];
-  const [value, setValue] = useState(initialValue);
   const [epubText, setEpubText] = useState("");
   const setStateFunction: setStateFunctionType = (value) => {
     setEpubText(value);
   };
-
-  const handleChange = useCallback(
-    (nextValue: Descendant[]) => {
-      setValue(nextValue);
-    },
-    [value]
-  );
   const renderLeaf = useCallback(
     (props: RenderLeafProps) => <EpubLeaf {...props} />,
     []
@@ -36,7 +28,7 @@ export const EpubLoader = () => {
   return (
     <div css={containerStyle}>
       <Header />
-      <Slate editor={editor} value={initialValue} onChange={handleChange}>
+      <Slate editor={editor} value={initialValue}>
         <SlateBlock
           fileExtension={fileExtension}
           setStateFunction={setStateFunction}
