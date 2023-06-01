@@ -1,4 +1,4 @@
-import { BaseEditor, Transforms } from "slate";
+import { BaseEditor, Editor, Transforms } from "slate";
 import { ReactEditor } from "slate-react";
 import { setStateFunctionType } from "../../types/type";
 
@@ -11,13 +11,11 @@ export const RemoveText = (props: {
       Array(props.editor.children.length),
       (value, index) => index
     );
-
     lengthArray.forEach((elem) => {
       Transforms.removeNodes(props.editor, {
         at: [elem, 0],
       });
     });
-
     props.setStateFunction("");
   };
 

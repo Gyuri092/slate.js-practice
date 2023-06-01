@@ -9,6 +9,7 @@ import { Header } from "../common/Header";
 import { SlateBlock } from "../common/SlateBlock";
 import { MarkdownLeaf } from "../markdown/MarkdownLeaf";
 import { Element } from "../common/Element";
+import { MarkupChanger } from "./MarkupChanger";
 
 export const MarkdownLoader = () => {
   const [editor] = useState(() => withReact(createEditor()));
