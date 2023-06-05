@@ -1,25 +1,27 @@
-import { useCallback, useState } from "react";
-import { Descendant, createEditor } from "slate";
-import { Editable, RenderLeafProps, Slate, withReact } from "slate-react";
+import { Slate, Editable, withReact, RenderLeafProps } from "slate-react";
 import { containerStyle } from "../../styles/style";
-import { setStateFunctionType } from "../../types/type";
 import { Header } from "../common/Header";
 import { SlateBlock } from "../common/SlateBlock";
+import { useCallback, useState } from "react";
+import { Descendant, createEditor } from "slate";
+import { EpubLeaf } from "../epub/EpubLeaf";
 import { Element } from "../common/Element";
-import { EpubLeaf } from "./EpubLeaf";
+import { setStateFunctionType } from "../../types/type";
+import { read, writeFileXLSX } from "xlsx";
 
-export const EpubLoader = () => {
+export const ExcelLoader = () => {
   const [editor] = useState(() => withReact(createEditor()));
-  const fileExtension = ".epub";
+  const fileExtension = ".xlsx";
   const initialValue: Descendant[] = [
     {
       type: "paragraph",
-      children: [{ text: "epub 텍스트를 수정해보세요." }],
+      children: [{ text: "excel 텍스트를 수정해보세요." }],
     },
   ];
-  const [epubText, setEpubText] = useState("");
+  const [ExcelText, setExcelText] = useState("");
+
   const setStateFunction: setStateFunctionType = (value) => {
-    setEpubText(value);
+    setExcelText(value);
   };
   const renderLeaf = useCallback(
     (props: RenderLeafProps) => <EpubLeaf {...props} />,

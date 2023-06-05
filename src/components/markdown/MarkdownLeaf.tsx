@@ -1,10 +1,18 @@
 import { css } from "@emotion/react";
 
 export const MarkdownLeaf = ({ attributes, children, leaf }) => {
+  // const leafArray = leaf.text
+  //   .split("\n")
+  //   .map((text: string) => text.trim())
+  //   .filter((text: string) => !!text);
+  // const contentArray: string[] = [];
+  // if (leafArray.length > 0) contentArray.push(...leafArray);
+  // console.log("contentArray :", contentArray);
+
   return (
     <span
       {...attributes}
-      className={css`
+      css={css`
         font-weight: ${leaf.bold && "bold"};
         font-style: ${leaf.italic && "italic"};
         text-decoration: ${leaf.underlined && "underline"};
