@@ -26,7 +26,8 @@
     "slate": "^0.94.1",
     "slate-react": "^0.94.2",
     "styled-components": "^6.0.0-rc.2",
-    "styled-reset": "^4.4.7"
+    "styled-reset": "^4.4.7",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.19.3/xlsx-0.19.3.tgz"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",

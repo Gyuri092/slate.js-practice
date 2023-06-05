@@ -9,16 +9,23 @@ export const Header = () => {
     case "/":
       linkArray.push(["/markdown", "markdown 편집기로 이동하기"]);
       linkArray.push(["/epub", "epub 편집기로 이동하기"]);
+      linkArray.push(["/excel", "excel 편집기로 이동하기"]);
       break;
     case "/markdown":
       linkArray.push(["/", "txt 편집기로 이동하기"]);
       linkArray.push(["/epub", "epub 편집기로 이동하기"]);
+      linkArray.push(["/excel", "excel 편집기로 이동하기"]);
       break;
     case "/epub":
       linkArray.push(["/", "txt 편집기로 이동하기"]);
       linkArray.push(["/markdown", "markdown 편집기로 이동하기"]);
+      linkArray.push(["/excel", "excel 편집기로 이동하기"]);
       break;
-
+    case "/excel":
+      linkArray.push(["/", "txt 편집기로 이동하기"]);
+      linkArray.push(["/markdown", "markdown 편집기로 이동하기"]);
+      linkArray.push(["/epub", "epub 편집기로 이동하기"]);
+      break;
     default:
       return <>오류</>;
   }
@@ -36,7 +43,7 @@ export const Header = () => {
 };
 
 const StyledHeaderContainer = styled.div`
-  width: 500px;
+  width: 700px;
   height: 50px;
   display: flex;
   justify-content: space-between;

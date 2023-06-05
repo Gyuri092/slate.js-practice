@@ -47,17 +47,28 @@ export const DropDown = (props: {
   setStateFunction: setStateFunctionType;
   editor: BaseEditor & ReactEditor;
 }) => {
+  const renderDropDown = (accept: string) => {
+    switch (accept) {
+      case ".txt":
+        return "txt 업로드";
+      case ".epub":
+        return "ePub 업로드";
+      case ".md":
+        return "markdown 업로드";
+      case ".xlsx":
+        return "excel 업로드";
+      default:
+        break;
+    }
+  };
+
   return (
     <>
       <MenuItemDivider />
       <div css={menuItemCss}>유형 변경</div>
       <MenuSubItem>
         <FileInputLabel htmlFor="file">
-          {props.accept === ".epub"
-            ? "ePub 업로드"
-            : props.accept === ".md"
-            ? "markdown 업로드"
-            : "txt 업로드"}
+          {renderDropDown(props.accept)}
         </FileInputLabel>
         <FileInput
           id="file"
