@@ -5,6 +5,7 @@ import { ReactEditor } from "slate-react";
 import { processImportedFile } from "../../utils/InsertSlate";
 import { setStateFunctionType } from "../../types/type";
 import { LoadEpub } from "../../utils/LoadEpub";
+import { LoadExcel } from "../../utils/LoadExcel";
 
 const menuItemCss = css`
   box-sizing: border-box;
@@ -47,8 +48,8 @@ export const DropDown = (props: {
   setStateFunction: setStateFunctionType;
   editor: BaseEditor & ReactEditor;
 }) => {
-  const renderDropDown = (accept: string) => {
-    switch (accept) {
+  const renderDropDown = () => {
+    switch (props.accept) {
       case ".txt":
         return "txt 업로드";
       case ".epub":
@@ -62,28 +63,27 @@ export const DropDown = (props: {
     }
   };
 
+  const getFileByExtension = (event: React.ChangeEvent<HTMLInputElement>) => {
+    switch (props.accept) {
+      case ".epub":
+        return LoadEpub(event, props.editor, props.setStateFunction);
+      case ".xlsx":
+        return LoadExcel(event, props.editor, props.setStateFunction);
+      default:
+        return processImportedFile(event, props.editor, props.setStateFunction);
+    }
+  };
   return (
     <>
       <MenuItemDivider />
       <div css={menuItemCss}>유형 변경</div>
       <MenuSubItem>
-        <FileInputLabel htmlFor="file">
-          {renderDropDown(props.accept)}
-        </FileInputLabel>
+        <FileInputLabel htmlFor="file">{renderDropDown()}</FileInputLabel>
         <FileInput
           id="file"
           type="file"
           accept={props.accept}
-          onChange={
-            props.accept === ".epub"
-              ? (event) => LoadEpub(event, props.editor, props.setStateFunction)
-              : (event) =>
-                  processImportedFile(
-                    event,
-                    props.editor,
-                    props.setStateFunction
-                  )
-          }
+          onChange={(event) => getFileByExtension(event)}
         />
       </MenuSubItem>
       <MenuItemDivider />

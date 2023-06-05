@@ -7,7 +7,6 @@ import { Descendant, createEditor } from "slate";
 import { EpubLeaf } from "../epub/EpubLeaf";
 import { Element } from "../common/Element";
 import { setStateFunctionType } from "../../types/type";
-import { read, writeFileXLSX } from "xlsx";
 
 export const ExcelLoader = () => {
   const [editor] = useState(() => withReact(createEditor()));
